@@ -21,6 +21,44 @@
       .modal-header {
         background-image: none !important;
       }
+
+      a {
+        text-decoration: underline;
+      }
+
+      .panel-title > a::before {
+        content: "+ ";
+        font-weight: 700;
+      }
+
+      .panel-title > a[aria-expanded="true"]::before {
+        content: "− ";
+      }
+
+      .panel,
+      .panel-default,
+      .panel-default > .panel-heading,
+      .modal-content,
+      .breadcrumb {
+        border-color: #595959 !important;
+      }
+
+      .btn,
+      .btn-success {
+        border: 2px solid #1f4d1f !important;
+      }
+
+      input[type="text"] {
+        border: 2px solid #595959;
+      }
+
+      a:focus,
+      button:focus,
+      input:focus,
+      .panel-title > a:focus {
+        outline: 3px solid #1a1a1a;
+        outline-offset: 2px;
+      }
     </style>
   </head>
   <body>
