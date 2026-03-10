@@ -16,10 +16,37 @@
     supportEmail: "support@HALT360.org",
   };
 
+  // Read query-string overrides for non-HTML fields (used by the preview tool).
+  // The bloodPressureCommunityProgramsHtml field is intentionally excluded because
+  // it accepts raw HTML and must only be set via window.LANDING_CONFIG.
+  var queryOverrides = {};
+  var textKeys = [
+    "stateName",
+    "stateResidents",
+    "departmentName",
+    "partnerName",
+    "campaignName",
+    "departmentWebUrl",
+    "bloodPressureDepartmentWebUrl",
+    "campaignWebUrl",
+    "bloodPressureCampaignWebUrl",
+    "supportEmail",
+  ];
+  if (window.location && window.location.search) {
+    var params = new URLSearchParams(window.location.search);
+    textKeys.forEach(function (key) {
+      var val = params.get(key);
+      if (val !== null) {
+        queryOverrides[key] = val;
+      }
+    });
+  }
+
   var cfg = Object.assign(
     {},
     defaultLandingConfig,
     window.LANDING_CONFIG || {},
+    queryOverrides,
   );
 
   document.querySelectorAll("[data-config-text]").forEach(function (el) {

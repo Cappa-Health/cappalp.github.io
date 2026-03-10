@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Landing Page Preview</title>
+    <link rel="stylesheet" href="web.css" />
+    <style>
+      body {
+        max-width: none;
+        padding: 1.5rem 2rem;
+      }
+
+      .preview-layout {
+        display: grid;
+        grid-template-columns: 22rem 1fr;
+        gap: 1.5rem;
+        align-items: start;
+      }
+
+      @media (max-width: 800px) {
+        .preview-layout {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .config-panel {
+        border: 1px solid #595959;
+        border-radius: 4px;
+        padding: 1rem;
+      }
+
+      .config-panel h2 {
+        margin-top: 0;
+        font-size: 1.1rem;
+      }
+
+      .field-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .field-group label {
+        font-size: 0.875rem;
+        font-weight: 600;
+      }
+
+      .field-group input[type="text"],
+      .field-group input[type="email"],
+      .field-group input[type="url"],
+      .field-group select {
+        width: 100%;
+        padding: 0.35rem 0.5rem;
+        border: 2px solid #595959;
+        border-radius: 3px;
+        font-size: 0.875rem;
+        font-family: inherit;
+      }
+
+      .field-group input:focus,
+      .field-group select:focus {
+        outline: 3px solid #1a1a1a;
+        outline-offset: 2px;
+      }
+
+      .preset-row {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .preset-row label {
+        font-weight: 600;
+        white-space: nowrap;
+        font-size: 0.875rem;
+      }
+
+      .preset-row select {
+        flex: 1;
+        padding: 0.35rem 0.5rem;
+        border: 2px solid #595959;
+        border-radius: 3px;
+        font-size: 0.875rem;
+        font-family: inherit;
+      }
+
+      .preset-row select:focus {
+        outline: 3px solid #1a1a1a;
+        outline-offset: 2px;
+      }
+
+      .page-select-row {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .page-select-row label {
+        font-weight: 600;
+        white-space: nowrap;
+        font-size: 0.875rem;
+      }
+
+      .page-select-row select {
+        flex: 1;
+        padding: 0.35rem 0.5rem;
+        border: 2px solid #595959;
+        border-radius: 3px;
+        font-size: 0.875rem;
+        font-family: inherit;
+      }
+
+      .page-select-row select:focus {
+        outline: 3px solid #1a1a1a;
+        outline-offset: 2px;
+      }
+
+      .btn-row {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+      }
+
+      .btn-preview {
+        background-color: #0b3d91;
+        color: #ffffff;
+        border: 2px solid #0b3d91;
+        border-radius: 3px;
+        padding: 0.45rem 1rem;
+        font-size: 0.875rem;
+        font-family: inherit;
+        cursor: pointer;
+        font-weight: 600;
+      }
+
+      .btn-preview:hover {
+        background-color: #092e6e;
+        border-color: #092e6e;
+      }
+
+      .btn-preview:focus {
+        outline: 3px solid #1a1a1a;
+        outline-offset: 2px;
+      }
+
+      .btn-copy {
+        background-color: #ffffff;
+        color: #1a1a1a;
+        border: 2px solid #595959;
+        border-radius: 3px;
+        padding: 0.45rem 1rem;
+        font-size: 0.875rem;
+        font-family: inherit;
+        cursor: pointer;
+        font-weight: 600;
+      }
+
+      .btn-copy:hover {
+        background-color: #f2f2f2;
+      }
+
+      .btn-copy:focus {
+        outline: 3px solid #1a1a1a;
+        outline-offset: 2px;
+      }
+
+      .copy-notice {
+        font-size: 0.8rem;
+        color: #3a7a3a;
+        font-weight: 600;
+        display: none;
+        align-items: center;
+      }
+
+      .copy-notice.visible {
+        display: flex;
+      }
+
+      .preview-pane h2 {
+        margin-top: 0;
+        font-size: 1.1rem;
+      }
+
+      #preview-frame {
+        width: 100%;
+        height: 700px;
+        border: 1px solid #595959;
+        border-radius: 3px;
+      }
+
+      .empty-frame {
+        width: 100%;
+        height: 700px;
+        border: 1px solid #595959;
+        border-radius: 3px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #f8f8f8;
+        color: #595959;
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <header>
+      <nav aria-label="Site">
+        <a href="index.html">← Home</a>
+      </nav>
+    </header>
+    <main id="main-content">
+      <h1>Landing Page Preview</h1>
+      <p>
+        Configure the fields below and click <strong>Load Preview</strong> to
+        see how the landing page will look with a custom state or department
+        configuration. Use <strong>Copy Link</strong> to share a shareable
+        preview URL.
+      </p>
+
+      <div class="preview-layout">
+        <section aria-labelledby="config-panel-title" class="config-panel">
+          <h2 id="config-panel-title">Configuration</h2>
+
+          <form id="preview-form" novalidate>
+            <div class="preset-row">
+              <label for="preset-select">Preset:</label>
+              <select id="preset-select" aria-label="Load a preset configuration">
+                <option value="">— Custom —</option>
+                <option value="alaska">Alaska (default)</option>
+                <option value="arkansas">Arkansas (example)</option>
+              </select>
+            </div>
+
+            <div class="page-select-row">
+              <label for="page-select">Page:</label>
+              <select id="page-select" aria-label="Select landing page to preview">
+                <option value="program_landings/lose_weight.html">Lose Weight</option>
+                <option value="program_landings/lower_blood_pressure.html">Lower Blood Pressure</option>
+                <option value="program_landings/lower_blood_sugar.html">Lower Blood Sugar</option>
+              </select>
+            </div>
+
+            <hr style="border: none; border-top: 1px solid #d0d0d0; margin: 0.75rem 0" />
+
+            <div class="field-group">
+              <label for="f-stateName">State name</label>
+              <input type="text" id="f-stateName" name="stateName" value="Alaska" />
+            </div>
+
+            <div class="field-group">
+              <label for="f-stateResidents">State residents</label>
+              <input type="text" id="f-stateResidents" name="stateResidents" value="Alaskans" />
+            </div>
+
+            <div class="field-group">
+              <label for="f-departmentName">Department name</label>
+              <input type="text" id="f-departmentName" name="departmentName" value="Alaska Department of Health" />
+            </div>
+
+            <div class="field-group">
+              <label for="f-partnerName">Partner name</label>
+              <input type="text" id="f-partnerName" name="partnerName" value="HALT (Health and Lifestyle Training)" />
+            </div>
+
+            <div class="field-group">
+              <label for="f-campaignName">Campaign name</label>
+              <input type="text" id="f-campaignName" name="campaignName" value="Alaska's Fresh Start campaign website" />
+            </div>
+
+            <div class="field-group">
+              <label for="f-departmentWebUrl">Department web URL</label>
+              <input type="url" id="f-departmentWebUrl" name="departmentWebUrl" value="https://health.alaska.gov/en/services/diabetes-prevention/" />
+            </div>
+
+            <div class="field-group">
+              <label for="f-bloodPressureDepartmentWebUrl">Blood pressure department URL</label>
+              <input type="url" id="f-bloodPressureDepartmentWebUrl" name="bloodPressureDepartmentWebUrl" value="https://health.alaska.gov/en/services/self-measured-blood-pressure/" />
+            </div>
+
+            <div class="field-group">
+              <label for="f-campaignWebUrl">Campaign web URL</label>
+              <input type="url" id="f-campaignWebUrl" name="campaignWebUrl" value="https://health.alaska.gov/en/services/fresh-start/" />
+            </div>
+
+            <div class="field-group">
+              <label for="f-bloodPressureCampaignWebUrl">Blood pressure campaign URL</label>
+              <input type="url" id="f-bloodPressureCampaignWebUrl" name="bloodPressureCampaignWebUrl" value="https://health.alaska.gov/en/services/fresh-start/" />
+            </div>
+
+            <div class="field-group">
+              <label for="f-supportEmail">Support email</label>
+              <input type="email" id="f-supportEmail" name="supportEmail" value="support@HALT360.org" />
+            </div>
+
+            <div class="btn-row">
+              <button type="submit" class="btn-preview">Load Preview</button>
+              <button type="button" id="copy-link-btn" class="btn-copy">Copy Link</button>
+              <span id="copy-notice" class="copy-notice" aria-live="polite">Copied!</span>
+            </div>
+          </form>
+        </section>
+
+        <section aria-labelledby="preview-pane-title" class="preview-pane">
+          <h2 id="preview-pane-title">Preview</h2>
+          <div id="frame-container">
+            <div class="empty-frame" id="empty-frame" aria-label="Preview area — click Load Preview to display the landing page">
+              Click <strong>&nbsp;Load Preview&nbsp;</strong> to display the page.
+            </div>
+            <iframe
+              id="preview-frame"
+              title="Landing page preview"
+              style="display: none"
+            ></iframe>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <script>
+      (function () {
+        var presets = {
+          alaska: {
+            stateName: "Alaska",
+            stateResidents: "Alaskans",
+            departmentName: "Alaska Department of Health",
+            partnerName: "HALT (Health and Lifestyle Training)",
+            campaignName: "Alaska's Fresh Start campaign website",
+            departmentWebUrl:
+              "https://health.alaska.gov/en/services/diabetes-prevention/",
+            bloodPressureDepartmentWebUrl:
+              "https://health.alaska.gov/en/services/self-measured-blood-pressure/",
+            campaignWebUrl:
+              "https://health.alaska.gov/en/services/fresh-start/",
+            bloodPressureCampaignWebUrl:
+              "https://health.alaska.gov/en/services/fresh-start/",
+            supportEmail: "support@HALT360.org",
+          },
+          arkansas: {
+            stateName: "Arkansas",
+            stateResidents: "Arkansans",
+            departmentName: "Arkansas Department of Health",
+            partnerName: "Healthy Lifestyle Training Team",
+            campaignName: "Arkansas Fresh Start website",
+            departmentWebUrl:
+              "https://example.gov/diabetes-prevention",
+            bloodPressureDepartmentWebUrl:
+              "https://example.gov/blood-pressure",
+            campaignWebUrl: "https://example.gov/fresh-start",
+            bloodPressureCampaignWebUrl: "https://example.gov/fresh-start",
+            supportEmail: "support@example.org",
+          },
+        };
+
+        var fieldNames = [
+          "stateName",
+          "stateResidents",
+          "departmentName",
+          "partnerName",
+          "campaignName",
+          "departmentWebUrl",
+          "bloodPressureDepartmentWebUrl",
+          "campaignWebUrl",
+          "bloodPressureCampaignWebUrl",
+          "supportEmail",
+        ];
+
+        var form = document.getElementById("preview-form");
+        var presetSelect = document.getElementById("preset-select");
+        var pageSelect = document.getElementById("page-select");
+        var frame = document.getElementById("preview-frame");
+        var emptyFrame = document.getElementById("empty-frame");
+        var copyBtn = document.getElementById("copy-link-btn");
+        var copyNotice = document.getElementById("copy-notice");
+
+        function getFieldValues() {
+          var values = {};
+          fieldNames.forEach(function (key) {
+            var el = document.getElementById("f-" + key);
+            if (el) {
+              values[key] = el.value.trim();
+            }
+          });
+          return values;
+        }
+
+        function buildPreviewUrl(page, values) {
+          var params = new URLSearchParams();
+          fieldNames.forEach(function (key) {
+            if (values[key]) {
+              params.set(key, values[key]);
+            }
+          });
+          return page + "?" + params.toString();
+        }
+
+        function loadPreview() {
+          var page = pageSelect.value;
+          var values = getFieldValues();
+          var url = buildPreviewUrl(page, values);
+          emptyFrame.style.display = "none";
+          frame.style.display = "block";
+          frame.src = url;
+        }
+
+        function copyLink() {
+          var page = pageSelect.value;
+          var values = getFieldValues();
+          var url = buildPreviewUrl(page, values);
+          // Build an absolute URL relative to the root of the site (preview.html lives at root).
+          var base = window.location.href.replace(/preview\.html.*$/, "");
+          var fullUrl = base + url;
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(fullUrl).then(function () {
+              showCopyNotice();
+            });
+          } else {
+            // Fallback for older browsers
+            var ta = document.createElement("textarea");
+            ta.value = fullUrl;
+            ta.style.position = "fixed";
+            ta.style.opacity = "0";
+            document.body.appendChild(ta);
+            ta.focus();
+            ta.select();
+            try {
+              document.execCommand("copy");
+              showCopyNotice();
+            } catch (e) {
+              // Silently ignore copy errors
+            }
+            document.body.removeChild(ta);
+          }
+        }
+
+        function showCopyNotice() {
+          copyNotice.classList.add("visible");
+          setTimeout(function () {
+            copyNotice.classList.remove("visible");
+          }, 2000);
+        }
+
+        presetSelect.addEventListener("change", function () {
+          var key = this.value;
+          if (!key || !presets[key]) {
+            return;
+          }
+          var preset = presets[key];
+          fieldNames.forEach(function (name) {
+            var el = document.getElementById("f-" + name);
+            if (el && preset[name] !== undefined) {
+              el.value = preset[name];
+            }
+          });
+        });
+
+        // When any field is edited manually, switch preset selector back to Custom.
+        fieldNames.forEach(function (key) {
+          var el = document.getElementById("f-" + key);
+          if (el) {
+            el.addEventListener("input", function () {
+              presetSelect.value = "";
+            });
+          }
+        });
+
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          loadPreview();
+        });
+
+        copyBtn.addEventListener("click", copyLink);
+      })();
+    </script>
+  </body>
+</html>
