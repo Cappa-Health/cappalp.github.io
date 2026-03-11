@@ -304,6 +304,13 @@
           padding: 22px;
         }
       }
+
+      @media (prefers-reduced-motion: reduce) {
+        .program-card:hover,
+        .program-card:focus-visible {
+          transform: none;
+        }
+      }
     </style>
   </head>
   <body>
