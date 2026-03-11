@@ -1,7 +1,9 @@
-/* web.css — Cappa Health Landing Page Styles (WCAG 2.1 AA compliant) */
+/* web.css — Cappa Health Landing Page Styles (designed to meet WCAG 2.1 AA guidelines) */
 
 /* ===== Reset & Base ===== */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -12,8 +14,14 @@ html {
   scroll-behavior: smooth;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 body {
-  font-family: 'Segoe UI', Arial, sans-serif;
+  font-family: "Segoe UI", Arial, sans-serif;
   font-size: 1rem;
   line-height: 1.6;
   color: #1a1a1a;
@@ -88,14 +96,14 @@ header {
   outline-color: #ffffff;
 }
 
-nav[aria-label="Main navigation"] ul {
+.main-nav ul {
   list-style: none;
   display: flex;
   gap: 1.5rem;
   flex-wrap: wrap;
 }
 
-nav[aria-label="Main navigation"] a {
+.main-nav a {
   color: #ffffff;
   text-decoration: none;
   font-weight: 600;
@@ -105,9 +113,16 @@ nav[aria-label="Main navigation"] a {
   transition: border-color 0.2s ease;
 }
 
-nav[aria-label="Main navigation"] a:hover,
-nav[aria-label="Main navigation"] a:focus-visible {
+.main-nav a:hover,
+.main-nav a:focus-visible {
   border-bottom-color: #ffffff;
+}
+
+.main-nav a:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 3px;
+  border-radius: 3px;
+  box-shadow: 0 0 0 2px #003f6e;
 }
 
 /* ===== Hero Section ===== */
@@ -257,7 +272,7 @@ footer a:hover {
     font-size: 1.4rem;
   }
 
-  nav[aria-label="Main navigation"] ul {
+  .main-nav ul {
     gap: 1rem;
   }
 }
