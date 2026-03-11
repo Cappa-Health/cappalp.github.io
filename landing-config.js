@@ -13,7 +13,7 @@ const LANDING_CONFIG = {
   /** Full state name displayed alongside the symbol where needed. */
   stateName: "California",
 
-  /** Organisation display name. */
+  /** Organization display name. */
   orgName: "Cappa Health",
 
   /** Contact e-mail address. */
