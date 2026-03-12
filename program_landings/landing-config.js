@@ -1,26 +1,5 @@
 (function () {
-  var defaultLandingConfig = {
-    stateName: "Alaska",
-    stateResidents: "Alaskans",
-    departmentName: "Alaska Department of Health",
-    partnerName: "HALT (Health and Lifestyle Training)",
-    campaignName: "Alaska's Fresh Start campaign website",
-    departmentWebUrl:
-      "https://health.alaska.gov/en/services/diabetes-prevention/",
-    bloodPressureDepartmentWebUrl:
-      "https://health.alaska.gov/en/services/self-measured-blood-pressure/",
-    campaignWebUrl: "https://health.alaska.gov/en/services/fresh-start/",
-    bloodPressureCampaignWebUrl:
-      "https://health.alaska.gov/en/services/fresh-start/",
-    bloodPressureCommunityProgramsHtml: "",
-    supportEmail: "support@HALT360.org",
-  };
-
-  var cfg = Object.assign(
-    {},
-    defaultLandingConfig,
-    window.LANDING_CONFIG || {},
-  );
+  var cfg = Object.assign({}, window.LANDING_CONFIG || {});
 
   document.querySelectorAll("[data-config-text]").forEach(function (el) {
     var key = el.getAttribute("data-config-text");
@@ -36,6 +15,20 @@
     }
   });
 
+  document.querySelectorAll("[data-config-src]").forEach(function (el) {
+    var key = el.getAttribute("data-config-src");
+    if (cfg[key]) {
+      el.setAttribute("src", cfg[key]);
+    }
+  });
+
+  document.querySelectorAll("[data-config-alt]").forEach(function (el) {
+    var key = el.getAttribute("data-config-alt");
+    if (cfg[key]) {
+      el.setAttribute("alt", cfg[key]);
+    }
+  });
+
   document.querySelectorAll("[data-config-mailto]").forEach(function (el) {
     var key = el.getAttribute("data-config-mailto");
     if (cfg[key]) {
@@ -48,6 +41,73 @@
     var key = el.getAttribute("data-config-html");
     if (cfg[key]) {
       el.innerHTML = cfg[key];
+    }
+  });
+
+  function escHtml(str) {
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+  }
+
+  function buildAccordion(locations, el) {
+    var accordionId = el.id || "accordion";
+    el.innerHTML = locations
+      .map(function (loc) {
+        var safeId = loc.city.replace(/[^a-zA-Z0-9]/g, "");
+        var headingId = "heading" + safeId;
+        var collapseId = "collapse" + safeId;
+        var bodyHtml = loc.providers
+          .map(function (p) {
+            return (
+              "<strong>" + escHtml(p.name) + "</strong>\n" + escHtml(p.details)
+            );
+          })
+          .join("\n\n");
+        return (
+          '<div class="panel panel-default">' +
+          '<div class="panel-heading" id="' +
+          headingId +
+          '">' +
+          '<h4 class="panel-title">' +
+          '<a class="collapsed" role="button" data-toggle="collapse"' +
+          ' data-parent="#' +
+          accordionId +
+          '"' +
+          ' href="#' +
+          collapseId +
+          '"' +
+          ' aria-expanded="false"' +
+          ' aria-controls="' +
+          collapseId +
+          '">' +
+          "<strong>" +
+          escHtml(loc.city) +
+          "</strong>" +
+          "</a>" +
+          "</h4>" +
+          "</div>" +
+          '<div id="' +
+          collapseId +
+          '" class="panel-collapse collapse"' +
+          ' aria-labelledby="' +
+          headingId +
+          '">' +
+          '<div class="panel-body" style="white-space: pre-wrap">' +
+          bodyHtml +
+          "</div>" +
+          "</div>" +
+          "</div>"
+        );
+      })
+      .join("");
+  }
+
+  document.querySelectorAll("[data-config-locations]").forEach(function (el) {
+    var key = el.getAttribute("data-config-locations");
+    if (cfg[key] && cfg[key].length) {
+      buildAccordion(cfg[key], el);
     }
   });
 
